@@ -1,22 +1,21 @@
 Static HTML file browser for Dropbox
 ====================================
 
-Screenshot about output
-------------------
+Screenshot
+----------
 ![screenshot not available](screenshot.png?raw=true)
 
 About the program
 ------------
-This program can generate html files to every directory in your Dropbox/Public folder (or any other shared folder) and makes it possible to navigate online between these directories when it looks like an output of apache web server.
+This program can generate HTML files to every directory in your Dropbox/Public folder (or any other shared folder) and makes it possible to navigate online between these directories when it looks like an output of Apache web server.
 
 Requirements
 -------------------
-* Dropbox account. If you don't have one, you can register here: https://db.tt/3La8trR
+* Dropbox account. If you don't have one, you can register here: https://www.dropbox.com
 * Linux (or Windows, but I can't give you any help how to use this program under Windows)
-* Python 2.7 interpreter (3.0 or newer versions may not work)
-* The following modules must be installed:
+* Python 3
+* The following module(s) must be installed:
   + jinja2
-  + unipath
 
 Installation
 ------------
@@ -36,3 +35,5 @@ Contributors
 [Iváncza Csaba](https://github.com/icsaba)
 
 [Fábián Rita](https://github.com/frita21)
+
+Posta Márió
