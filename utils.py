@@ -1,6 +1,7 @@
 import os
-import config
 from shutil import copytree, rmtree
+
+import config
 
 
 def is_answer_yes(answer):
@@ -73,6 +74,7 @@ def mark_to_delete(path_to_starting_directory, file_to_remove):
             files_to_remove.append(os.path.join(dirpath, file_to_remove))
 
     return files_to_remove
+
 
 def cleanup(path_to_starting_directory):
     """

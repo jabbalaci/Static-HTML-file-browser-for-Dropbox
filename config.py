@@ -6,7 +6,6 @@ DROPBOX_LINK_TO_ICONS = "{base}/assets/static_html_icons".format(base=DROPBOX_BA
 
 GITHUB_IO_BASE_URL = "https://jabbalaci.github.io/teaching-assets"
 
-
 # here you can change the output of the program
 SHOW_SERVER_INFO = True         # default: True
 HIDE_HIDDEN_ENTRIES = True      # default: True

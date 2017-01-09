@@ -17,16 +17,16 @@ icon file_name last_modification_time file_size open_url description
 It is designed to look like the output of apache web server.
 """
 
-import os
-import re
-import utils
-import config
 import argparse
 import operator
-# from unipath import Path
+import os
+import re
 from time import gmtime, strftime
+
 from jinja2 import Environment, FileSystemLoader
 
+import config
+import utils
 
 TEMPLATE_ENVIRONMENT = Environment(autoescape=False,
                                    loader=FileSystemLoader('templates'),
@@ -173,7 +173,6 @@ def get_entries(dirpath, names):
     paths = []
 
     for name in names:
-        # paths.append(get_entry(Path(dirpath, name)))
         paths.append(get_entry(dirpath, name))
 
     # paths.sort()
@@ -183,7 +182,6 @@ def get_entries(dirpath, names):
 
 
 def get_entry(dirpath, name):
-    # assert type(path) == Path, "path is not a Path object"
     path = os.stat(dirpath + "/" + name)
 
     # name = path.name
