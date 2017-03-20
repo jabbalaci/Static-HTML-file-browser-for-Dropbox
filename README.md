@@ -30,10 +30,7 @@ Installation
 
 Contributors
 ----------------
-[Jabba Laci](https://github.com/jabbalaci)
-
-[Iváncza Csaba](https://github.com/icsaba)
-
-[Fábián Rita](https://github.com/frita21)
-
-Posta Márió
+* [Jabba Laci](https://github.com/jabbalaci)
+* [Iváncza Csaba](https://github.com/icsaba)
+* [Fábián Rita](https://github.com/frita21)
+* Posta Márió
