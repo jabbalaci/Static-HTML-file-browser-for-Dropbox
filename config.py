@@ -1,21 +1,21 @@
 # CONFIGURATION FILE of Static HTML file browser for Dropbox
 
 # this is a link to the icons directory
-DROPBOX_BASE_URL = "https://dl.dropboxusercontent.com/u/144888"
-DROPBOX_LINK_TO_ICONS = "{base}/assets/static_html_icons".format(base=DROPBOX_BASE_URL)
+# DROPBOX_BASE_URL = "https://dl.dropboxusercontent.com/u/144888"
 
 GITHUB_IO_BASE_URL = "https://jabbalaci.github.io/teaching-assets"
+DROPBOX_LINK_TO_ICONS = "{base}/icons".format(base=GITHUB_IO_BASE_URL)
 
 # here you can change the output of the program
 SHOW_SERVER_INFO = True         # default: True
 HIDE_HIDDEN_ENTRIES = True      # default: True
 HIDE_INDEX_HTML_FILES = True    # default: True
-HIDE_ICONS_FOLDER = False       # default: True
+HIDE_ICONS_FOLDER = True        # default: True
 MONOSPACED_FONTS = True         # default: True
 SERVER_INFO = "Apache/2.4.23 at github.io Port 80"
 
 # icons folder in your dropbox
-DROPBOX_ICON_FOLDER = "/home/jabba/Dropbox/assets/static_html_icons"
+# DROPBOX_ICON_FOLDER = "/home/jabba/Dropbox/assets/static_html_icons"
 
 # if you want to add more icons, you can do it here, but don't forget to
 # add the gif file to the icons directory too.

@@ -117,7 +117,7 @@ def create_index_html(root):
     for dirpath, dirnames, filenames in os.walk(root):
         if config.HIDE_HIDDEN_ENTRIES and os.path.basename(dirpath).startswith("."):
                 continue
-        filter_names(dirnames, filenames)
+        dirnames, filenames = filter_names(dirnames, filenames)
 
         dirs = get_entries(dirpath, dirnames)
         files = get_entries(dirpath, filenames)
@@ -154,8 +154,10 @@ def filter_names(dirnames, filenames):
         filter_icons_dir(dirnames)
 
     if config.HIDE_HIDDEN_ENTRIES:
-        filter_hiddens(dirnames)
-        filter_hiddens(filenames)
+        dirnames = filter_hiddens(dirnames)
+        filenames = filter_hiddens(filenames)
+    #
+    return dirnames, filenames
 
 
 def filter_icons_dir(dirnames):
@@ -164,9 +166,8 @@ def filter_icons_dir(dirnames):
 
 
 def filter_hiddens(names):
-    for name in names:
-        if name.startswith("."):
-            names.remove(name)
+    res = [name for name in names if not name.startswith(".")]
+    return res
 
 
 def get_entries(dirpath, names):
