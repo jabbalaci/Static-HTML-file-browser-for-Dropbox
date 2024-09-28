@@ -8,7 +8,7 @@ def is_answer_yes(answer):
     """Returns True if answer is yes, False otherwise"""
 
     answer = answer.lower()
-    return answer == 'yes' or answer == 'y'
+    return answer == "yes" or answer == "y"
 
 
 def ask_yes_no_question(question):
@@ -18,7 +18,7 @@ def ask_yes_no_question(question):
     try:
         result = input(question + " (yes/no) ")
     except (EOFError, KeyboardInterrupt):
-        print("")   # prints a new line
+        print("")  # prints a new line
         exit(1)  # terminates the program
     return result
 
@@ -101,7 +101,9 @@ def cleanup(path_to_starting_directory):
     print("You are going to remove {count} files.".format(count=number_of_files_to_remove))
 
     # asking for user confirmation
-    answer = ask_yes_no_question("Are you sure you want to continue? You cannot undo this operation!")
+    answer = ask_yes_no_question(
+        "Are you sure you want to continue? You cannot undo this operation!"
+    )
     if is_answer_yes(answer):
         for filename in files_to_remove:
             os.unlink(filename)

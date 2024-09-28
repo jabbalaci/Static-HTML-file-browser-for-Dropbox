@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-# encoding: utf-8
 
 # programmed by: Kiss Sándor Ádám
 # kisssandoradam@gmail.com
-# idea and a lots of help: Dr. Szathmáry László
-# Project started on 2013. december 13 midnight
+# idea and lots of help: Laszlo Szathmary
+# Project started on Dec. 13, 2013, midnight
 # University of Debrecen
 
 
@@ -28,20 +27,20 @@ from jinja2 import Environment, FileSystemLoader
 import config
 import utils
 
-TEMPLATE_ENVIRONMENT = Environment(autoescape=False,
-                                   loader=FileSystemLoader('templates'),
-                                   trim_blocks=False)
+TEMPLATE_ENVIRONMENT = Environment(
+    autoescape=False, loader=FileSystemLoader("templates"), trim_blocks=False
+)
 
 
 def create_ipynb_link(filename):
-    link = 'http://nbviewer.jupyter.org/urls/'
-    if config.GITHUB_IO_BASE_URL.startswith('https://'):
+    link = "http://nbviewer.jupyter.org/urls/"
+    if config.GITHUB_IO_BASE_URL.startswith("https://"):
         link = link + config.GITHUB_IO_BASE_URL[8:]
-    elif config.GITHUB_IO_BASE_URL.startswith('http://'):
+    elif config.GITHUB_IO_BASE_URL.startswith("http://"):
         link = link + config.GITHUB_IO_BASE_URL[7:]
     pattern = "Public_github.io"
     findex = filename.find(pattern)
-    link = link + filename[findex+len(pattern):]
+    link = link + filename[findex + len(pattern) :]
     return link
 
 
@@ -50,12 +49,12 @@ def get_open_url(filename):
 
     if os.path.isfile(filename):
         ext = os.path.splitext(filename)[1]
-        if ext == '.ipynb':
+        if ext == ".ipynb":
             link.append(create_ipynb_link(filename))
-            link.append('nbview')
+            link.append("nbview")
     else:
-        link.append('')
-        link.append('')
+        link.append("")
+        link.append("")
 
     return link
 
@@ -64,8 +63,8 @@ def sizeof_fmt(filesize_in_bytes):
     """Converts file size to human readable format."""
 
     num = float(filesize_in_bytes)
-    for x in ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']:
-        if num < 1024.0 and x == 'bytes':
+    for x in ["bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"]:
+        if num < 1024.0 and x == "bytes":
             return int(num)
         elif num < 1024.0:
             return "{0:.2f}&nbsp;{1}".format(num, x)
@@ -96,14 +95,14 @@ def render_template(template_filename, context):
 
 def get_context(datas, root, current_directory, relpath):
     return {
-        'datas': datas,
-        'root': root,
-        'current_directory': current_directory,
-        'font': ( "monospace" if config.MONOSPACED_FONTS else ""),
-        'SHOW_SERVER_INFO': config.SHOW_SERVER_INFO,
-        'server_info': config.SERVER_INFO,
-        'index_of': ("" if relpath == "." else relpath),
-        'link_to_icons': config.DROPBOX_LINK_TO_ICONS
+        "datas": datas,
+        "root": root,
+        "current_directory": current_directory,
+        "font": ("monospace" if config.MONOSPACED_FONTS else ""),
+        "SHOW_SERVER_INFO": config.SHOW_SERVER_INFO,
+        "server_info": config.SERVER_INFO,
+        "index_of": ("" if relpath == "." else relpath),
+        "link_to_icons": config.DROPBOX_LINK_TO_ICONS,
     }
 
 
@@ -115,19 +114,25 @@ def create_index_html(root):
     total_generated_index_htmls = 0
 
     for dirpath, dirnames, filenames in os.walk(root):
-        if config.HIDE_HIDDEN_ENTRIES and os.path.basename(dirpath).startswith("."):
+        if config.HIDE_HIDDEN_ENTRIES:
+            if os.path.basename(dirpath).startswith("."):
                 continue
+            if os.path.basename(dirpath) in config.HIDDEN_ENTRIES:
+                continue
+        #
         dirnames, filenames = filter_names(dirnames, filenames)
 
         dirs = get_entries(dirpath, dirnames)
         files = get_entries(dirpath, filenames)
 
-        context = get_context(datas=dirs + files,
-                              root=root,
-                              current_directory=dirpath,
-                              relpath=os.path.relpath(dirpath, root))
+        context = get_context(
+            datas=dirs + files,
+            root=root,
+            current_directory=dirpath,
+            relpath=os.path.relpath(dirpath, root),
+        )
 
-        rendered_template = render_template('template.html', context)
+        rendered_template = render_template("template.html", context)
         index_html = os.path.join(dirpath, "index.html")
 
         try:
@@ -166,8 +171,9 @@ def filter_icons_dir(dirnames):
 
 
 def filter_hiddens(names):
-    res = [name for name in names if not name.startswith(".")]
-    return res
+    result = [name for name in names if not name.startswith(".")]
+    result = [name for name in result if name not in config.HIDDEN_ENTRIES]
+    return result
 
 
 def get_entries(dirpath, names):
@@ -177,7 +183,7 @@ def get_entries(dirpath, names):
         paths.append(get_entry(dirpath, name))
 
     # paths.sort()
-    paths.sort(key=operator.attrgetter('name'))
+    paths.sort(key=operator.attrgetter("name"))
 
     return paths
 
@@ -230,17 +236,21 @@ def main():
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("location",
-                        help="path to the Public folder of your Dropbox folder.")
+    parser.add_argument("location", help="path to the Public folder of your Dropbox folder.")
 
     group = parser.add_mutually_exclusive_group()
-    group.add_argument("-i", "--install",
-                       action="store_true",
-                       help="prepares your Dropbox folder by copying icons to the specified directory.\
-                             This directory can be set up in config.py configuration file.")
-    group.add_argument("--clean",
-                       action="store_true",
-                       help="cleans your Dropbox directory by deleting index.html files.")
+    group.add_argument(
+        "-i",
+        "--install",
+        action="store_true",
+        help="prepares your Dropbox folder by copying icons to the specified directory.\
+                             This directory can be set up in config.py configuration file.",
+    )
+    group.add_argument(
+        "--clean",
+        action="store_true",
+        help="cleans your Dropbox directory by deleting index.html files.",
+    )
 
     args = parser.parse_args()
 
@@ -253,6 +263,7 @@ def main():
         exit(0)
 
     create_index_html(args.location)
+
 
 #############################################################################
 
