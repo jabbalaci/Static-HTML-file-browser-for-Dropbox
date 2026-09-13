@@ -71,6 +71,7 @@
                     <tr>
                         <td class="icon"><img src="{{ link_to_icons }}/back.gif" alt="back.gif"></td>
                         <td class="name"><a href="../index.html">Parent Directory</a></td>
+                        <!-- <td class="date" /> -->
                         <td class="size">-</td>
                         <td class="open" />
                         <td class="description" />
@@ -80,6 +81,7 @@
                     <tr>
                         <td class="icon"><img src="{{ link_to_icons }}/{{ item.icon }}" alt="{{ item.icon }}"></td>
                         <td class="name"><a href="{{ item.url }}">{{ item.name }}</a></td>
+                        <!-- <td class="date">{{ item.date }}</td> -->
                         <td class="size">{{ item.size }}</td>
                         <td class="open">
                             {% if item.open_url[0] %}

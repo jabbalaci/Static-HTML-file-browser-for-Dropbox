@@ -20,6 +20,7 @@ import argparse
 import operator
 import os
 import re
+import sys
 from time import gmtime, strftime
 
 from jinja2 import Environment, FileSystemLoader
@@ -67,7 +68,7 @@ def sizeof_fmt(filesize_in_bytes):
         if num < 1024.0 and x == "bytes":
             return int(num)
         elif num < 1024.0:
-            return "{0:.2f}&nbsp;{1}".format(num, x)
+            return f"{num:.2f}&nbsp;{x}"
         num /= 1024.0
 
 
@@ -136,19 +137,21 @@ def create_index_html(root):
         index_html = os.path.join(dirpath, "index.html")
 
         try:
-            if file_differs_from_content(filename=index_html, content=rendered_template):
+            if file_differs_from_content(
+                filename=index_html, content=rendered_template
+            ):
                 write_to_disk(rendered_template, index_html)
                 total_generated_index_htmls += 1
-        except IOError as error:
+        except OSError as error:
             print(error)
 
         total_processed_dirs += len(dirs)
         total_processed_files += len(files)
 
     print("------------------------------------")
-    print("Total processed directories:       {count}".format(count=total_processed_dirs))
-    print("Total processed files:             {count}".format(count=total_processed_files))
-    print("Total index.html files generated:  {count}".format(count=total_generated_index_htmls))
+    print(f"Total processed directories:       {total_processed_dirs}")
+    print(f"Total processed files:             {total_processed_files}")
+    print(f"Total index.html files generated:  {total_generated_index_htmls}")
 
 
 def filter_names(dirnames, filenames):
@@ -236,7 +239,9 @@ def main():
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("location", help="path to the Public folder of your Dropbox folder.")
+    parser.add_argument(
+        "location", help="path to the Public folder of your Dropbox folder."
+    )
 
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
@@ -256,11 +261,11 @@ def main():
 
     if args.install:
         utils.install(args.location)
-        exit(0)
+        sys.exit(0)
 
     if args.clean:
         utils.cleanup(args.location)
-        exit(0)
+        sys.exit(0)
 
     create_index_html(args.location)
 
